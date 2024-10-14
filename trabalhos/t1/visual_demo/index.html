@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<head>
+    <title>Mergesort - visualização</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sometype+Mono:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="stuff">
+        <div class="intro">
+            <h1>Demo visual do <span class="highlight">Mergesort</span></h1>
+            <p>Digite uma <span class="highlight">lista formatada</span> de inteiros em um dos seguintes formatos:</p>
+            <ul>
+                <li>"3 1 4"</li>
+                <li>"1, 5, 9"</li>
+                <li>"[2, 6, 5]"</li>
+                <li>"(3, 5, 9)"</li>
+            </ul>
+            <p>Clique o botão <span class="highlight">"Gerar"</span> para ver a visualização do mergesort</p>
+            <input type="text" id="list_input" placeholder="Digite uma lista">
+            <button onclick="create_steps();">Gerar</button>
+            <p>Ainda <span class="highlight">não</span> implementado</p>
+        </div>
+        <div class="content">
+            <div class="container" id="line_1">
+
+            </div>
+            <div class="container" id="line_2">
+
+            </div>
+            
+        </div>
+    </div>
+
+    <script>create_steps();</script>
+    
+</body>
