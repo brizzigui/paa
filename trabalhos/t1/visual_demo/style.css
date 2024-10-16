@@ -42,3 +42,9 @@ body
     justify-content: center;
     text-align: center;
 }
+
+.item
+{
+    border: 2px solid #17a32b;
+    
+}
