@@ -50,3 +50,8 @@ body
     border: 2px solid #17a32b;
     display: inline-block;
 }
+
+.halfway
+{
+    border: 2px solid #fa6a16;
+}

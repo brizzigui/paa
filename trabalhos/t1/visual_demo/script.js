@@ -179,7 +179,7 @@ function create_steps()
                 let values = '<div class="item">' + element + '</div>';
                 let target = document.getElementById("line_"+key);
                 target.innerHTML += '<div class="container">' + values + '</div>';
-            })
+            });
             
             continue;
         }
@@ -202,10 +202,12 @@ function create_steps()
         joins[key].forEach(element => {
             let target = document.getElementById("line_"+(line_counter+parseInt(key)-1));
             let values = "";
+            
             element.forEach(inner => {
-                values += '<div class="item">' + inner + '</div>'
+                values += '<div class="item halfway">' + inner + '</div>'
             })
 
+            
             target.innerHTML += '<div class="container">' + values + '</div>';
 
         });
