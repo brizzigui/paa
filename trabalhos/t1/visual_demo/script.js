@@ -19,7 +19,7 @@ function set_columns_property(id)
     document.getElementById(id).style.gridTemplateColumns = string;
 }
 
-let matrix_of_solutions = [];
+let matrix_of_solutions = {};
 function merge(arr, left, mid, right) {
     const n1 = mid - left + 1;
     const n2 = right - mid;
@@ -69,33 +69,148 @@ function merge(arr, left, mid, right) {
         k++;
     }
 
-    matrix_of_solutions.push(tmp);
 }
 
-function merge_sort(arr, left, right) {
+let breaks = {};
+let joins = {};
+
+function symbolic_rejoin(cpy)
+{
+    let og = [];
+    for (let i = 0; i < cpy.length; i++) {
+        og.push([cpy[i]]);
+    }
+
+    let line = 0;
+    do {  
+        let aux = [];
+        line += 1;
+        for (let cur = 0; cur < og.length-1; cur+=2) {
+            let tmp = [];
+            let i = 0;
+            let j = 0;
+            let k = 0;
+            // Merge the temp arrays back into arr[left..right]
+            while (i < og[cur].length && j < og[cur+1].length) {
+                if (og[cur][i] <= og[cur+1][j]) {
+                    tmp[k] = og[cur][i];
+                    i++;
+                } else {
+                    tmp[k] = og[cur+1][j];
+                    j++;
+                }
+
+                k++;
+            }
+
+            // Copy the remaining elements of L[], if there are any
+            while (i < og[cur].length) {
+                tmp[k] = og[cur][i];
+                i++;
+                k++;
+            }
+
+            // Copy the remaining elements of R[], if there are any
+            while (j < og[cur+1].length) {
+                tmp[k] = og[cur+1][j];
+                j++;
+                k++;
+            }
+
+            aux.push([...tmp]);
+        }
+
+        if(og.length % 2 != 0)
+            aux.push(og[og.length-1]);
+
+        joins[line] = [...aux];
+        og = [...aux];
+
+    } while(og.length > 1)
+}
+
+function merge_sort(arr, left, right, rec_level) {
+
+    if(breaks[rec_level] === undefined)
+    {
+        breaks[rec_level] = [];
+        breaks[rec_level].push(arr.slice(left, right+1));
+    }
+
+    else
+    {
+        breaks[rec_level].push(arr.slice(left, right+1));
+    }
+
     if (left >= right)
         return;
 
     const mid = Math.floor(left + (right - left) / 2);
-    merge_sort(arr, left, mid);
-    merge_sort(arr, mid + 1, right);
+    merge_sort(arr, left, mid, rec_level+1);
+    merge_sort(arr, mid + 1, right, rec_level+1);
     merge(arr, left, mid, right);
 }
 
+
 function create_steps()
 {
+    let parent_div = document.getElementById("parent");
+    parent_div.innerHTML = "";
+    breaks = {};
+    matrix_of_solutions = {};
+
+
     let list = parse_array();
+    let cpy = [...list];
+    merge_sort(list, 0, list.length-1, 0);
 
-    merge_sort(list, 0, list.length-1);
-    for (let i = 0; i < matrix_of_solutions.length; i++) {
-        let line_pos_idx = Math.ceil(Math.log2(matrix_of_solutions[i].length));
 
-        let string = `            
-            <div class="container" id=""> ` +
-            matrix_of_solutions[i] +
-            `</div>`;
-        document.getElementById("content").innerHTML += string;
+    for (let i = 0; i < 2*Math.ceil(Math.log2(list.length))+1; i++) {
+        parent_div.innerHTML += '<div id="line_' + i + '"></div>';
     }
+
+    let line_counter = 0
+    for (const key in breaks) 
+    {
+        line_counter += 1;
+        if(key == Math.ceil(Math.log2(list.length)))
+        {
+            cpy.forEach(element => {
+                let values = '<div class="item">' + element + '</div>';
+                let target = document.getElementById("line_"+key);
+                target.innerHTML += '<div class="container">' + values + '</div>';
+            })
+            
+            continue;
+        }
+
+        breaks[key].forEach(element => {
+            let target = document.getElementById("line_"+key);
+            let values = "";
+            element.forEach(inner => {
+                values += '<div class="item">' + inner + '</div>'
+            })
+
+            target.innerHTML += '<div class="container">' + values + '</div>';
+
+        });
+    }
+
+    symbolic_rejoin(cpy);
+
+    for (const key in joins) {
+        joins[key].forEach(element => {
+            let target = document.getElementById("line_"+(line_counter+parseInt(key)-1));
+            let values = "";
+            element.forEach(inner => {
+                values += '<div class="item">' + inner + '</div>'
+            })
+
+            target.innerHTML += '<div class="container">' + values + '</div>';
+
+        });
+    }
+
 
 }
 
