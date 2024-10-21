@@ -12,9 +12,17 @@
 </head>
 
 <body>
+    <script>
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter') {
+            create_steps();
+          }
+        });
+      </script>
     <div class="stuff">
         <div class="intro">
             <h1>Demo visual do <span class="highlight">Mergesort</span></h1>
+            <p>Grupo: Gabriel Stiegemeier, Guilherme Brizzi e Mathias Recktenvald</p>
             <p>Digite uma <span class="highlight">lista formatada</span> de inteiros em um dos seguintes formatos:</p>
             <ul>
                 <li>"3 1 4"</li>
