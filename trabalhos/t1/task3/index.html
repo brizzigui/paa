@@ -12,9 +12,17 @@
 </head>
 
 <body>
+    <script>
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter') {
+            create_steps();
+          }
+        });
+      </script>
     <div class="stuff">
         <div class="intro">
             <h1>Demo visual do <span class="highlight">Mergesort</span></h1>
+            <p>Grupo: Gabriel Stiegemeier, Guilherme Brizzi e Mathias Recktenvald</p>
             <p>Digite uma <span class="highlight">lista formatada</span> de inteiros em um dos seguintes formatos:</p>
             <ul>
                 <li>"3 1 4"</li>
@@ -25,30 +33,10 @@
             <p>Clique o botão <span class="highlight">"Gerar"</span> para ver a visualização do mergesort</p>
             <input type="text" id="list_input" placeholder="Digite uma lista">
             <button onclick="create_steps();">Gerar</button>
-            <p>Ainda <span class="highlight">não</span> implementado</p>
         </div>
-        <div class="content" id="content">
-            <div class="container" id="l1_c1">
-                <div class="item">1</div>
-                <div class="item">2</div>
-                <div class="item">3</div>
-                <div class="item">4</div>
-            </div>
-            <br>
-            <div class="container" id="l2_c1">
-                <div class="item">1</div>
-                <div class="item">2</div>
-            </div>
-            <br>
-            <div class="container" id="l2_c2">
-                <div class="item">3</div>
-                <div class="item">4</div>
-            </div>
-
+        <div class="content" id="parent">
 
         </div>
     </div>
-
-    <script>create_steps();</script>
     
 </body>
